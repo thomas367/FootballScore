@@ -29,7 +29,7 @@
 		methods:{
 			getCompetition: function(code){
 				this.$router.push({
-					name: 'competition',
+					name: 'league',
 					params: {
 						id: code
 					}

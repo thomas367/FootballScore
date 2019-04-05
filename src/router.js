@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Competitions from './components/competitions.vue'
-import Competition from './components/competition.vue'
+import League from './components/league.vue'
+import Team from './components/team.vue'
 
 
 Vue.use(Router)
@@ -13,10 +14,16 @@ export default new Router({
     	component: Competitions
     },
     {
-    	path: '/competition',
-    	name: 'competition',
+    	path: '/league',
+    	name: 'league',
     	props: true,
-    	component: Competition
+    	component: League
+    },
+    {
+        path: '/team',
+        name: 'team',
+        props: true,
+        component: Team
     }
   ]
 })

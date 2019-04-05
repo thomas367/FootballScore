@@ -4,10 +4,10 @@
 			<p> {{info.name}} </p>
 		</div>
 		<div class="standings">
-			<b-tabs class="navigation">
+			<b-tabs nav-class="mt-1 justify-content-center">
 				<!-- Total section -->
 				<b-tab title="Total" active>
-					<table class="standing table-bordered">
+					<table class="standing table-bordered table-hover">
 						<thead>
 							<tr>
 								<th>Position</th>
@@ -23,24 +23,24 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for="teams in total">
-								<th>{{teams.position}}</th>
-								<th>{{teams.team.name}}</th>
-								<th>{{teams.playedGames}}</th>
-								<th>{{teams.won}}</th>
-								<th>{{teams.draw}}</th>
-								<th>{{teams.lost}}</th>
-								<th>{{teams.goalsFor}}</th>
-								<th>{{teams.goalsAgainst}}</th>
-								<th>{{teams.goalDifference}}</th>
-								<th>{{teams.points}}</th>
+							<tr v-for="teams in total" @click="getTeamInformation(teams.team.id)">
+								<td>{{teams.position}}</td>
+								<td>{{teams.team.name}}</td>
+								<td>{{teams.playedGames}}</td>
+								<td>{{teams.won}}</td>
+								<td>{{teams.draw}}</td>
+								<td>{{teams.lost}}</td>
+								<td>{{teams.goalsFor}}</td>
+								<td>{{teams.goalsAgainst}}</td>
+								<td>{{teams.goalDifference}}</td>
+								<td>{{teams.points}}</td>
 							</tr>
 						</tbody>
 					</table>
 				</b-tab>
 				<!-- Home section -->
 				<b-tab title="Home">
-					<table class="standing table-bordered">
+					<table class="standing table-bordered table-hover">
 						<thead>
 							<tr>
 								<th>Position</th>
@@ -56,24 +56,24 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for="teams in home">
-								<th>{{teams.position}}</th>
-								<th>{{teams.team.name}}</th>
-								<th>{{teams.playedGames}}</th>
-								<th>{{teams.won}}</th>
-								<th>{{teams.draw}}</th>
-								<th>{{teams.lost}}</th>
-								<th>{{teams.goalsFor}}</th>
-								<th>{{teams.goalsAgainst}}</th>
-								<th>{{teams.goalDifference}}</th>
-								<th>{{teams.points}}</th>
+							<tr v-for="teams in home" @click="getTeamInformation(teams.team.id)">
+								<td>{{teams.position}}</td>
+								<td>{{teams.team.name}}</td>
+								<td>{{teams.playedGames}}</td>
+								<td>{{teams.won}}</td>
+								<td>{{teams.draw}}</td>
+								<td>{{teams.lost}}</td>
+								<td>{{teams.goalsFor}}</td>
+								<td>{{teams.goalsAgainst}}</td>
+								<td>{{teams.goalDifference}}</td>
+								<td>{{teams.points}}</td>
 							</tr>
 						</tbody>
 					</table>
 				</b-tab>
 				<!-- Away section-->
 				<b-tab title="Away">
-					<table class="standing table-bordered">
+					<table class="standing table-bordered table-hover">
 						<thead>
 							<tr>
 								<th>Position</th>
@@ -89,17 +89,17 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr v-for="teams in away">
-								<th>{{teams.position}}</th>
-								<th>{{teams.team.name}}</th>
-								<th>{{teams.playedGames}}</th>
-								<th>{{teams.won}}</th>
-								<th>{{teams.draw}}</th>
-								<th>{{teams.lost}}</th>
-								<th>{{teams.goalsFor}}</th>
-								<th>{{teams.goalsAgainst}}</th>
-								<th>{{teams.goalDifference}}</th>
-								<th>{{teams.points}}</th>
+							<tr v-for="teams in away" @click="getTeamInformation(teams.team.id)">
+								<td>{{teams.position}}</td>
+								<td>{{teams.team.name}}</td>
+								<td>{{teams.playedGames}}</td>
+								<td>{{teams.won}}</td>
+								<td>{{teams.draw}}</td>
+								<td>{{teams.lost}}</td>
+								<td>{{teams.goalsFor}}</td>
+								<td>{{teams.goalsAgainst}}</td>
+								<td>{{teams.goalDifference}}</td>
+								<td>{{teams.points}}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -134,12 +134,20 @@
 					}
 				})
 				.then(response => {
-					console.log(response.data);
 					this.info = response.data.competition;
 					this.total = response.data.standings[0].table;
 					this.home = response.data.standings[1].table;
 					this.away = response.data.standings[2].table;
 				}) 
+			},
+			getTeamInformation: function(teamId){
+				this.$router.push({
+					name: 'team',
+					params: {
+						id: teamId
+					}
+				}) 
+				
 			}
 		}
 	}
@@ -147,19 +155,21 @@
 
 <style scoped lang="scss">
 	.country{
-		margin-top: 1rem;
+		top: 25px;
 		text-align: center;
-	}
+		background-color: #2c3945; 
+		color: white;
+		height: 50px;
+		font-weight: bold;
+		font-size: 22px;
 
-	.navigation{
-		margin-bottom: 1rem;
-		justify-content: center;
 	}
 
 	.standing{
-		width: 700px;
 		margin-right: auto;
 		margin-left: auto;
+		text-align: center;
+		cursor: pointer;
 
 	}
 
