@@ -24,7 +24,6 @@
 </template>
 
 <script>
-
 	export default{
 		methods:{
 			getCompetition: function(code){

@@ -91,6 +91,7 @@
 			this.getTeamInfo();
 		},
 		methods: {
+			/* Get team information */
 			getTeamInfo: function(){
 				axios.get("https://api.football-data.org/v2/teams/"+this.teamId,{
 					headers: {
@@ -126,7 +127,7 @@
 		margin-right: auto;
 
 		@media (min-width: 320px){
-			width: 280px;
+			width: 300px;
 		}
 
 		@media (min-width: 768px){
