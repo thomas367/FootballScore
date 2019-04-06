@@ -25,7 +25,7 @@
 						<tbody>
 							<tr v-for="teams in total" @click="getTeamInformation(teams.team.id)">
 								<td>{{teams.position}}</td>
-								<td>{{teams.team.name}}</td>
+								<td><div v-if="teams.team.crestUrl !== null"><img :src="teams.team.crestUrl" height="25" width="25"/></div>{{teams.team.name}}</td>
 								<td>{{teams.playedGames}}</td>
 								<td>{{teams.won}}</td>
 								<td>{{teams.draw}}</td>
@@ -58,7 +58,7 @@
 						<tbody>
 							<tr v-for="teams in home" @click="getTeamInformation(teams.team.id)">
 								<td>{{teams.position}}</td>
-								<td>{{teams.team.name}}</td>
+								<td><div v-if="teams.team.crestUrl !== null"><img :src="teams.team.crestUrl" height="25" width="25"/></div>{{teams.team.name}}</td>
 								<td>{{teams.playedGames}}</td>
 								<td>{{teams.won}}</td>
 								<td>{{teams.draw}}</td>
@@ -91,7 +91,7 @@
 						<tbody>
 							<tr v-for="teams in away" @click="getTeamInformation(teams.team.id)">
 								<td>{{teams.position}}</td>
-								<td>{{teams.team.name}}</td>
+								<td><div v-if="teams.team.crestUrl !== null"><img :src="teams.team.crestUrl" height="25" width="25"/></div>{{teams.team.name}}</td>
 								<td>{{teams.playedGames}}</td>
 								<td>{{teams.won}}</td>
 								<td>{{teams.draw}}</td>
@@ -125,6 +125,7 @@
 		},
 		created: function(){
 			this.getStandings();
+			this.getLeagueScorers();
 		},
 		methods: {
 			getStandings: function(){
@@ -134,11 +135,12 @@
 					}
 				})
 				.then(response => {
+					console.log(response.data)
 					this.info = response.data.competition;
 					this.total = response.data.standings[0].table;
 					this.home = response.data.standings[1].table;
 					this.away = response.data.standings[2].table;
-				}) 
+				}); 
 			},
 			getTeamInformation: function(teamId){
 				this.$router.push({
@@ -146,8 +148,18 @@
 					params: {
 						id: teamId
 					}
-				}) 
+				});
 				
+			},
+			getLeagueScorers: function(){
+				axios.get("https://api.football-data.org/v2/competitions/"+this.code+"/scorers",{
+					headers: {
+						'X-Auth-Token': '3f02e1b0e61e4af5a8dbc7be8304073a'
+					}
+				})
+				.then(response => {
+					console.log(response.data);
+				}); 
 			}
 		}
 	}
@@ -170,6 +182,15 @@
 		margin-left: auto;
 		text-align: center;
 		cursor: pointer;
+		font-size: 16px;
+
+		@media(min-width: 320px){
+			font-size: 11px;
+		}
+
+		@media(min-width: 768px){
+			font-size: 16px;
+		}
 
 	}
 
